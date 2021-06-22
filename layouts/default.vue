@@ -1,17 +1,19 @@
 <template>
   <div>
-    <TheHeader />
-    <TheError />
+    <Header />
+    <MsgWindow />
     <Nuxt />
   </div>
 </template>
 
 <script>
-import TheHeader from '~/components/TheHeader.vue'
+import Header from '~/components/Header.vue'
+import MsgWindow from '~/components/MsgWindow.vue'
 
 export default {
   components: {
-    TheHeader
+    Header,
+    MsgWindow
   }
 }
 </script>

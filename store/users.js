@@ -1,4 +1,5 @@
 import firebase from '~/plugins/firebase'
+import Cookies from 'universal-cookie'
 const db = firebase.firestore()
 
 export const state = () => ({
@@ -32,6 +33,8 @@ export const actions = {
         comment: '',
         image: ''
       })
+      const cookie = new Cookies()
+      cookie.set('credential', 'true')
       this.$router.push('/Home')
     
     } catch(e) {
@@ -47,6 +50,8 @@ export const actions = {
       if (!email || !password) throw new Error('未入力の項目があります')
 
       await firebase.auth().signInWithEmailAndPassword(email, password)
+      const cookie = new Cookies()
+      cookie.set('credential', 'true')
       this.$router.push('/Home')
 
     } catch(e) {
@@ -57,8 +62,9 @@ export const actions = {
   async logout(context) {
     try {
       await firebase.auth().signOut()
-      this.$router.push('/')
-    
+      const cookie = new Cookies()
+      cookie.remove('credential')
+      this.$router.push({ path: '/', query: { redirected: 'logout'} })
     } catch(e) {
       context.commit('updateErrorMsg', e.message, { root: true })
     }
@@ -92,6 +98,8 @@ export const actions = {
           image: ''
         })
       }
+      const cookie = new Cookies()
+      cookie.set('credential', 'true')
       this.$router.push('/Home')
     
     } catch(e) {

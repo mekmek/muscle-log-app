@@ -29,6 +29,11 @@
 
 <script>
 export default {
+  mounted() {
+    const redirected = this.$route.query.redirected
+    if (redirected === 'noCredential') this.$store.dispatch('ciUpdateErrorMsg', 'ログインが必要です')
+    if (redirected === 'logout') this.$store.dispatch('ciUpdateErrorMsg', 'ログアウトしました')
+  },
   data() {
     return {
       email: '',
