@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="/Home">筋トレアプリ（仮）</a>
     <ul class="navbar-nav" v-if="isActive">
       <li class="nav-item"><a class="nav-link" href="#">メディア</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">設定</a></li>
+      <li class="nav-item"><a class="nav-link" href="/Setting">設定</a></li>
       <li class="nav-item"><a class="nav-link" href="#" @click="logout">ログアウト</a></li>
     </ul>
   </nav>

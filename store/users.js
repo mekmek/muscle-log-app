@@ -3,13 +3,22 @@ import Cookies from 'universal-cookie'
 const db = firebase.firestore()
 
 export const state = () => ({
-  userName: ''
+  userName: '',
+  uid: ''
 })
 
 export const mutations = {
   updateUserName(state, user) {
     state.userName = user.userName
-  } 
+  },
+  updateUid(state, uid) {
+    state.uid = uid
+  }
+}
+
+export const getters = {
+  userName: (state) => state.userName,
+  uid: (state) => state.uid
 }
 
 export const actions = {
@@ -49,7 +58,10 @@ export const actions = {
     try {
       if (!email || !password) throw new Error('未入力の項目があります')
 
-      await firebase.auth().signInWithEmailAndPassword(email, password)
+      const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password)
+      const uid = userCredential.user.uid
+      context.commit('updateUid', uid)
+      
       const cookie = new Cookies()
       cookie.set('credential', 'true')
       this.$router.push('/Home')
@@ -98,6 +110,10 @@ export const actions = {
           image: ''
         })
       }
+
+      const uid = result.user.uid
+      context.commit('updateUid', uid)
+      
       const cookie = new Cookies()
       cookie.set('credential', 'true')
       this.$router.push('/Home')
